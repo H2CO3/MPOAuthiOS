@@ -32,7 +32,7 @@ authorizes your app.
 }
 
 Now the client will acquire the request token, then it will open the authentication URL in Safari. When the user authorizes your app,
-the service (hopefully) will redirect him/her to your app via the custom URL scheme along with the access token & secret
+the service (hopefully) will redirect him/her to your app via the custom URL scheme along with the request token & secret & verifier
 (myapp-oauth-callback://twitter?oauth_token=sOmEOAuthToKeNyOuGoT&oauth_token_secret=wHaTeVeRrAnDoMsTuFf)
 You'll need to handle this in your application:handleOpenURL: method in your app delegate, as the following:
 
@@ -59,7 +59,7 @@ You'll need to handle this in your application:handleOpenURL: method in your app
 	return YES;
 }
 
-3. If you've done this, the API will notify you that it got the tokens in it's delegate's oauthApi:receivedAccesToken:secret: method.
+3. If you've done this, the API will ask the service for the access token and then notify you that it got the tokens in it's delegate's oauthApi:receivedAccesToken:secret: method.
 The API will smartly store the tokens, so you don't have to authorize it when your app has to be restarted.
 You can log out using [client discardCredentials]; after.
 
