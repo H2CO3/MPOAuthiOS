@@ -152,7 +152,7 @@ NSString * const MPOAuthAuthenticationURLKey = @"MPOAuthAuthenticationURL";
 	[[NSUserDefaults standardUserDefaults] setObject:credentials forKey:@"MPOAuthSavedCredentials"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	if([delegate_ respondsToSelector:@selector(oauthApi:receivedAccessToken:secret:)]) {
-		[delegate_ oauthApi:self receivedAccessToken:[[notification userInfo] objectForKey:@"oauth_token"] secret:[[notification userInfo] objectForKey:@"oauth_token_secret"]];
+		[delegate_ oauthApi:self receivedAccessToken:accessToken secret:accessTokenSecret];
 	}
 }
 
