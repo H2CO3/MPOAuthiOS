@@ -1,5 +1,4 @@
 An implementation of MPOAuth that actually works on iOS.
-/* To be documented properly shortly. */
 Thanks for Carl Adam for making the otherwise awesome MPOAuth library.
 License: CreativeCommons Attirbution Unported 3.0 License
 
@@ -11,14 +10,14 @@ or b. a base URL and an auth URL:
 #import <MPOAuth/MPOAuth.h>
 
 NSDictionary *appCredentials = [NSDictionary dictionaryWithObjectsAndKeys:@"ApPcOnSuMeRkEy", kMPOAuthCredentialConsumerKey, @"OAuthApPsEcReTkEy", kMPOAuthCredentialConsumerSecret, nil];
-MPOAuthAPI *client = [[MPOAuthAPI alloc] initWithCredentials:appCredentials andBaseURL:[NSURL URLWithString:@"https://api.twitter.com/&quot;]];
+MPOAuthAPI *client = [[MPOAuthAPI alloc] initWithCredentials:appCredentials andBaseURL:[NSURL URLWithString:@"https://api.twitter.com/"]];
 client.delegate = self; // e. g. your view controller
 
 2. In your delegate, provide the callback URL to the API. This will be passed along with the OAuth access token & secret when the user
 authorizes your app.
 
 - (NSURL *) callbackUrlForOAuthApi:(MPOAuthAPI *)api {
-	NSURL *url = [NSURL URLWithString:@"myapp-oauth-callback://twitter&quot;];
+	NSURL *url = [NSURL URLWithString:@"myapp-oauth-callback://twitter"];
 	return url;
 }
 
@@ -33,7 +32,11 @@ authorizes your app.
 
 Now the client will acquire the request token, then it will open the authentication URL in Safari. When the user authorizes your app,
 the service (hopefully) will redirect him/her to your app via the custom URL scheme along with the request token & secret & verifier
+<<<<<<< HEAD
 (myapp-oauth-callback://twitter?oauth_token=sOmEOAuthToKeNyOuGoT&amp;oauth_token_secret=wHaTeVeRrAnDoMsTuFf&amp;oauth_verifier=vErIfIeR)
+=======
+(myapp-oauth-callback://twitter?oauth_token=sOmEOAuthToKeNyOuGoT&oauth_token_secret=wHaTeVeRrAnDoMsTuFf&oauth_verifier=vErIfIeR)
+>>>>>>> 66abbfcbf957c2cb4f4e99e2b230c7cc8f9928d4
 You'll need to handle this in your application:handleOpenURL: method in your app delegate, as the following:
 
 - (BOOL) application:(UIApplication *)sharedApplication handleOpenURL:(NSURL *)openUrl {
