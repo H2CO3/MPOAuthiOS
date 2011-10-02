@@ -33,23 +33,18 @@ authorizes your app.
 
 Now the client will acquire the request token, then it will open the authentication URL in Safari. When the user authorizes your app,
 the service (hopefully) will redirect him/her to your app via the custom URL scheme along with the request token & secret & verifier
-(myapp-oauth-callback://twitter?oauth_token=sOmEOAuthToKeNyOuGoT&oauth_token_secret=wHaTeVeRrAnDoMsTuFf)
+(myapp-oauth-callback://twitter?oauth_token=sOmEOAuthToKeNyOuGoT&oauth_token_secret=wHaTeVeRrAnDoMsTuFf&oauth_verifier=vErIfIeR)
 You'll need to handle this in your application:handleOpenURL: method in your app delegate, as the following:
 
 - (BOOL) application:(UIApplication *)sharedApplication handleOpenURL:(NSURL *)openUrl {
 	// check whether or not it's an OAuth callback redirect URL
 	if ([[openUrl scheme] isEqualToString:@"myapp-oauth-callback"]) {
 		// OAuth callback!!! parse the parameters
-		NSString *q = [openUrl query];
-		NSArray *paramsArray = [q componentsSeparatedByString:@"&"];
-		NSMutableDictionary *params = [NSMutableDictionary dictionary];
-		for (NSString *keyValuePair in paramsArray) {
-			NSArray *param = [keyValuePair componentsSeparatedByString:@"="];
-			[params setObject:[param objectAtIndex:0] forKey:[param objectAtIndex:1]];
-		}
+		NSDictionary *params = [MPURLRequestParameter parameterDictionaryFromString:[openUrl query]]
 		// params now contains the oauth_token and oauth_token_secret, so pass it on the OAuth API instance
 		[client setCredential:[params objectForKey:@"oauth_token"] withName:MPOAuthCredentialAccessTokenKey];
-		[client setCredential:[params objectForKey:@"oauth_token_secret"] withName:MPOAuthCredentialAccessTokenSecretKey];
+		[client setCredential:[params objectForKey:@"oauth_token_secret"] withName:MPOAuthCredentialAccessTokenSecretKey]; // (**)
+		[client setCredential:[params objectForKey:@"oauth_verifier"] withName:MPOAuthCredentialVerifierKey];
 		// and let it know that it needs to conitnue the dance
 		[client authenticate]; // yes, the same method again
 	} else {
@@ -66,8 +61,7 @@ You can log out using [client discardCredentials]; after.
 * To actually do something useful with the API/client, you'll need to perform either GET or POST methods to the API's resource URLs, with the proper parameters
 (abstractly implemented by the MPURLRequestParameter class - it creates an array of parameter objects from a GET-format URL query string):
 For example, you do so to update a user's status on Twitter:
-	NSArray *params = [MPURLRequestParameter parametersFromString:[NSString stringWithFormat:@"status=%@", @"Hey! Just posted a tweet from my iOS app!"]];
-	[client performPOSTMethod:@"/1/statuses/update.json" withParameters:params withTarget:self andAction:@selector(twitterStatusUpdateSent)];
+	[client performPostMethod:@"/1/statuses/update.json" withQuery:@"status=Just updated my status using OAuth 1.0a!" target:self action:@selector(twitterStatusUpdateSent)];
 
 and in the delegate:
 - (void) twitterStatusUpdateSent {
@@ -81,5 +75,4 @@ and in the delegate:
 Well, that's all you need to know about MPOAuthAPI.
 
 TODOs:
- - implement a method on MPOAuthAPI that works with a dictionary as params
  - support multipart/form-data methods for POST methods to enable uploading files (images to Twitter, sound files to soundcloud etc.)
