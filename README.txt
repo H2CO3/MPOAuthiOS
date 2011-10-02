@@ -61,12 +61,13 @@ You can log out using [client discardCredentials]; after.
 * To actually do something useful with the API/client, you'll need to perform either GET or POST methods to the API's resource URLs, with the proper parameters
 (abstractly implemented by the MPURLRequestParameter class - it creates an array of parameter objects from a GET-format URL query string):
 For example, you do so to update a user's status on Twitter:
-	[client performPostMethod:@"/1/statuses/update.json" withQuery:@"status=Just updated my status using OAuth 1.0a!" target:self action:@selector(twitterStatusUpdateSent)];
+	[client performPostMethod:@"/1/statuses/update.json" withQuery:@"status=Just updated my status using OAuth 1.0a!" target:self action:@selector(updatedStatus:response)];
 
 and in the delegate:
-- (void) twitterStatusUpdateSent {
+- (void) updatedStatus:(MPOAuthAPIRequestLoader *)ldr response:(NSString *)response {
 	UIAlertView *av = [UIAlertView new];
 	av.title = @"Tweet sent";
+	av.message = response; // JSON
 	[av addButtonWithTitle:@"Dismiss"];
 	[av show];
 	[av release];
