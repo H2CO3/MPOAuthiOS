@@ -13,6 +13,7 @@
 
 extern NSString * const MPOAuthRequestTokenURLKey;
 extern NSString * const MPOAuthUserAuthorizationURLKey;
+extern NSString * const MPOAuthCredentialVerifierKey;
 extern NSString * const MPOAuthUserAuthorizationMobileURLKey;
 
 extern NSString * const MPOAuthNotificationRequestTokenReceived;

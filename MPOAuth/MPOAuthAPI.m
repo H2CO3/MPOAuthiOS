@@ -206,6 +206,39 @@ NSString * const MPOAuthAuthenticationURLKey = @"MPOAuthAuthenticationURL";
 
 #pragma mark -
 
+// Begin H2CO3's additions
+
+// convenience messages
+
+- (void) performGetMethod:(NSString *)method withParameters:(NSDictionary *)parameters target:(id)target action:(SEL)action {
+	NSArray *requestParameters = [MPURLRequestParameter parametersFromDictionary:parameters];
+	[self performMethod:method withParameters:requestParameters withTarget:target andAction:action];
+}
+
+- (void) performGetMethod:(NSString *)method withQuery:(NSString *)query target:(id)target action:(SEL)action {
+	NSArray *requestParameters = [MPURLRequestParameter parametersFromString:query];
+	[self performMethod:method withParameters:requestParameters withTarget:target andAction:action];
+}
+
+- (void) performPostMethod:(NSString *)method withParameters:(NSDictionary *)parameters target:(id)target action:(SEL)action {
+	NSArray *requestParameters = [MPURLRequestParameter parametersFromDictionary:parameters];
+	[self performPOSTMethod:method withParameters:requestParameters withTarget:target andAction:action];
+}
+
+- (void) performPostMethod:(NSString *)method withQuery:(NSString *)query target:(id)target action:(SEL)action {
+	NSArray *requestParameters = [MPURLRequestParameter parametersFromString:query];
+	[self performPOSTMethod:method withParameters:requestParameters withTarget:target andAction:action];
+}
+
+/*
+// to be implemented
+// support uploading files using
+// multipart/form-data encoding
+- (void) performPostMethod:(NSString *)method withFilePath:(NSString *)path dataFieldName:(NSString *)name otherParameters:(NSDictionary *)parameters target:(id)target action:(SEL)action;
+*/
+
+// End H2CO3's additions
+
 - (void)performMethod:(NSString *)inMethod withTarget:(id)inTarget andAction:(SEL)inAction {
 	[self performMethod:inMethod atURL:self.baseURL withParameters:nil withTarget:inTarget andAction:inAction usingHTTPMethod:@"GET"];
 }

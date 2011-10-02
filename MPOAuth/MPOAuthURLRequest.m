@@ -100,7 +100,7 @@
 	} else if  ([[self HTTPMethod] isEqualToString:@"POST"]) {
 		NSArray *nonOauthParameters = [self nonOAuthParameters];
 		urlString = [self.url absoluteString];
-		[aRequest setValue: [self authorizationHeaderValueFromParameterString:parameterString] forHTTPHeaderField:@"Authorization"];
+		[aRequest setValue:[self authorizationHeaderValueFromParameterString:parameterString] forHTTPHeaderField:@"Authorization"];
 
 		if ([nonOauthParameters count] && [aRequest HTTPBody]) {
 			[NSException raise:@"MalformedHTTPPOSTMethodException" format:@"The request has both an HTTP Body and additional parameters. This is not supported."];

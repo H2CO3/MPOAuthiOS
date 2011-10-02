@@ -77,6 +77,21 @@ typedef enum {
 - (void)authenticate;
 - (BOOL)isAuthenticated;
 
+// Begin H2CO3's additions
+// convenience messages
+- (void) performGetMethod:(NSString *)method withParameters:(NSDictionary *)parameters target:(id)target action:(SEL)action;
+- (void) performGetMethod:(NSString *)method withQuery:(NSString *)query target:(id)taret action:(SEL)action;
+- (void) performPostMethod:(NSString *)method withParameters:(NSDictionary *)parameters target:(id)target action:(SEL)action;
+- (void) performPostMethod:(NSString *)method withQuery:(NSString *)query target:(id)target action:(SEL)action;
+
+/*
+// to be implemented
+// support uploading files using
+// multipart/form-data encoding
+- (void) performPostMethod:(NSString *)method withFilePath:(NSString *)path dataFieldName:(NSString *)name otherParameters:(NSDictionary *)parameters target:(id)target action:(SEL)action;
+*/
+// End H2CO3's additions
+
 - (void)performMethod:(NSString *)inMethod withTarget:(id)inTarget andAction:(SEL)inAction;
 - (void)performMethod:(NSString *)inMethod withParameters:(NSArray *)inParameters withTarget:(id)inTarget andAction:(SEL)inAction;
 - (void)performMethod:(NSString *)inMethod atURL:(NSURL *)inURL withParameters:(NSArray *)inParameters withTarget:(id)inTarget andAction:(SEL)inAction;
