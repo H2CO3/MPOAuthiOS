@@ -32,11 +32,7 @@ authorizes your app.
 
 Now the client will acquire the request token, then it will open the authentication URL in Safari. When the user authorizes your app,
 the service (hopefully) will redirect him/her to your app via the custom URL scheme along with the request token & secret & verifier
-<<<<<<< HEAD
-(myapp-oauth-callback://twitter?oauth_token=sOmEOAuthToKeNyOuGoT&amp;oauth_token_secret=wHaTeVeRrAnDoMsTuFf&amp;oauth_verifier=vErIfIeR)
-=======
 (myapp-oauth-callback://twitter?oauth_token=sOmEOAuthToKeNyOuGoT&oauth_token_secret=wHaTeVeRrAnDoMsTuFf&oauth_verifier=vErIfIeR)
->>>>>>> 66abbfcbf957c2cb4f4e99e2b230c7cc8f9928d4
 You'll need to handle this in your application:handleOpenURL: method in your app delegate, as the following:
 
 - (BOOL) application:(UIApplication *)sharedApplication handleOpenURL:(NSURL *)openUrl {
